@@ -1,0 +1,10 @@
+{
+  "scripts": {
+		"parse": "parcel index.html",
+		"build": "parcel build index.html --dist-dir ./dist"
+	},
+  "dependencies": {
+    "firebase": "^9.20.0",
+    "parcel": "^2.8.3"
+  }
+}

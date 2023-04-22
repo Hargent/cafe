@@ -1,0 +1,4 @@
+{"error":".zip archives do not support non-regular files","level":"error","msg":"unable to write file node_modules/.bin/pbjs","time":"2023-04-22T10:50:57Z"}
+{"error":".zip archives do not support non-regular files","level":"error","msg":"unable to write file node_modules/.bin/pbts","time":"2023-04-22T10:50:57Z"}
+{"error":".zip archives do not support non-regular files","level":"error","msg":"unable to write file node_modules/.bin/proto-loader-gen-types","time":"2023-04-22T10:50:57Z"}
+{"error":".zip archives do not support non-regular files","level":"error","msg":"unable to write file node_modules/@grpc/grpc-js/node_modules/.bin/proto-loader-gen-types","time":"2023-04-22T10:51:05Z"}
