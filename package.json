@@ -1,10 +1,27 @@
 {
-  "scripts": {
+	"scripts": {
 		"parse": "parcel index.html",
 		"build": "parcel build index.html --dist-dir ./dist"
 	},
-  "dependencies": {
-    "firebase": "^9.20.0",
-    "parcel": "^2.8.3"
-  }
+	"dependencies": {
+		"firebase": "^9.20.0",
+		"parcel": "^2.8.3"
+	},
+	"devDependencies": {
+		"process": "^0.11.10"
+	},
+	"name": "cafe-firestore",
+	"version": "1.0.0",
+	"dault": "index.html",
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/Hargent/cafe.git"
+	},
+	"author": "Hargent",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Hargent/cafe/issues"
+	},
+	"homepage": "https://github.com/Hargent/cafe#readme",
+	"description": ""
 }

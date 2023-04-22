@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Cafe</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	</head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Cafe</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-</head>
+	<body>
+		<h1>Cloud Cafe</h1>
 
-<body>
-  <h1>Cloud Cafe</h1>
+		<div class="content">
+			<form id="add-cafe-form">
+				<input type="text" placeholder="Cafe Name" name="name" />
+				<input type="text" placeholder="Cafe City" name="city" />
+				<input type="text" placeholder="Cafe Cousine" name="cousine" />
+				<button type="submit" id="add-cafe">Add Cafe</button>
+			</form>
 
-  <div class="content">
+			<ul id="cafe-list"></ul>
+		</div>
 
-    <form id="add-cafe-form"></form>
-
-    <ul id="cafe-list"></ul>
-
-  </div>
-
-  <script type="module" src="script.js"></script>
-</body>
-
+		<script type="module" src="script.js"></script>
+	</body>
 </html>
