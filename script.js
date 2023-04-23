@@ -1,4 +1,15 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDoc,
+	getDocs,
+	onSnapshot,
+	orderBy,
+	query,
+	where,
+} from "firebase/firestore";
 
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -23,6 +34,7 @@ const db = getFirestore(app);
 
 const cafeList = document.querySelector("#cafe-list");
 // const form = document.querySelector("#add-cafe-form");
+
 const init = async data => {
 	try {
 		const docRef = await addDoc(collection(db, "cafes"), data);
@@ -31,36 +43,98 @@ const init = async data => {
 		console.error("Error adding document: ", e);
 	}
 };
-const renderCafe = doc => {
+
+const renderCafe = _doc => {
 	const li = document.createElement("li");
 
 	const name = document.createElement("span");
 	const city = document.createElement("span");
 	const cousine = document.createElement("span");
+	const cross = document.createElement("div");
 
-	li.setAttribute("data-id", doc.id);
-	name.innerHTML = doc.data()?.name;
-	city.innerHTML = doc.data()?.city;
-	cousine.innerHTML = doc.data()?.cousine ?? "";
+	li.setAttribute("data-id", _doc.id);
+	name.innerHTML = _doc.data()?.name;
+	city.innerHTML = _doc.data()?.city;
+	cousine.innerHTML = _doc.data()?.cousine ?? "";
+	cross.textContent = "x";
+	cross.classList.add("delete");
 
 	li.appendChild(name);
 	li.appendChild(city);
 	li.appendChild(cousine);
+	li.appendChild(cross);
 
 	cafeList.appendChild(li);
+
+	cross.addEventListener("click", async e => {
+		e.stopPropagation();
+		// getting the document id
+		const id = e.target.parentElement.getAttribute("data-id");
+		// query firestore and delete
+		const docRef = doc(db, "cafes", id);
+		const docSnap = await getDoc(docRef);
+
+		if (docSnap.exists()) {
+			console.log("Document data : " + docSnap.data());
+			// delete the document
+			deleteDoc(docRef);
+		} else {
+			console.log("No such document in the database");
+		}
+	});
 };
-const getDocuments = async () => {
+// const getDocuments = async () => {
+// 	try {
+// 		const _query = query(collection(db, "cafes"), orderBy("cousine"));
+// 		const getDoc = await getDocs(_query);
+// 		getDoc.docs.forEach(doc => {
+// 			renderCafe(doc);
+// 		});
+// 	} catch (e) {
+// 		console.error("Error adding document: ", e);
+// 	}
+// };
+// ! Realtime Store
+const updateDom = async () => {
 	try {
-		const getDoc = await getDocs(collection(db, "cafes"));
-		getDoc.docs.forEach(doc => {
-			renderCafe(doc);
+		const _query = query(collection(db, "cafes"), orderBy("cousine"));
+		// Realtime data
+		// a listener for any change in the database which is then reflected in the frontend
+		const dataSnapShot = onSnapshot(_query, doc => {
+			const changes = doc.docChanges();
+			changes.forEach(change => {
+				if (change.type === "added") {
+					renderCafe(change.doc);
+				}
+				if (change.type === "removed") {
+					const li = cafeList.querySelector(
+						"[data-id=" + change.doc.id + "]"
+					);
+					cafeList.removeChild(li);
+				}
+			});
 		});
 	} catch (e) {
 		console.error("Error adding document: ", e);
 	}
 };
+updateDom();
+// ! Getting queries
+// const getQuery = async () => {
+// 	// querying for a particular property
+// 	const q = query(collection(db, "cafes"), where("city", "==", "Konoha"));
+// 	// get the docs in an ordering
+// 	const o = query(collection(db, "cafes"), orderBy("name"));
+// 	const querySnapShot = await getDocs(o);
 
-getDocuments();
+// 	// console.log(querySnapShot);
+// 	querySnapShot.forEach(_query => {
+// 		console.log(_query.id + " : " + _query.data());
+// 	});
+// };
+// getQuery();
+
+// getDocuments();
 document.addEventListener("submit", e => {
 	e.preventDefault();
 	const form = e.target;
